@@ -13,7 +13,6 @@
         android:layout_height="100dp"
         app:useIndicator="true"
         app:autoSlide="true"
-        app:autoSlide_repeat_time="2000"
         />
 
 
