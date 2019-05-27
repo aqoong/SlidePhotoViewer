@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SlidePhotoViewer">
+        <attr name="placeholder" format="reference"/>
+        <attr name="maxSize" format="integer"/>
+        <attr name="autoSlide" format="boolean"/>
+        <attr name="useIndicator" format="boolean"/>
+        <attr name="autoSlide_repeat_time" format="integer"/>
+    </declare-styleable>
+</resources>
