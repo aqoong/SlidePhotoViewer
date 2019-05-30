@@ -1,10 +1,11 @@
 package com.aqoong.lib.slidephotoviewer;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.widget.AppCompatImageView;
+
+import android.support.annotation.NonNull;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,8 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
-public class SlidePhotoViewerAdapter extends PagerAdapter {
+public class SlidePhotoViewerAdapter extends PagerAdapter
+{
     private final String TAG = getClass().getSimpleName();
 
     private Context             mContext;
@@ -58,15 +60,33 @@ public class SlidePhotoViewerAdapter extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.slidephotoviewer_pager_item, container, false);
 
         AppCompatImageView imageView = itemView.findViewById(R.id.slidephotoviewer_image);
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
-        requestOptions.placeholder(mPlaceHolderResource);
 
-        imageRequestManager.load(imageResourceList.get(position).resource)
-                .fitCenter()
-                .apply(requestOptions)
-                .into(imageView);
-        imageView.setOnClickListener(imageResourceList.get(position).listener);
+        RequestOptions requestOptions = new RequestOptions();
+        try
+        {
+            requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
+            requestOptions.placeholder(mPlaceHolderResource);
+            requestOptions.fitCenter();
+
+            imageRequestManager.load(imageResourceList.get(position).resource)
+                    .apply(requestOptions)
+                    .into(imageView);
+            imageView.setOnClickListener(imageResourceList.get(position).listener);
+        }
+        //Glide 4.9.0 method
+        catch (NoSuchMethodError e){
+            e.printStackTrace();
+
+            requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
+            requestOptions.placeholder(mPlaceHolderResource);
+
+            imageRequestManager.load(imageResourceList.get(position).resource)
+                    .fitCenter()
+                    .apply(requestOptions)
+                    .into(imageView);
+            imageView.setOnClickListener(imageResourceList.get(position).listener);
+
+        }
 
         container.addView(itemView);
 
