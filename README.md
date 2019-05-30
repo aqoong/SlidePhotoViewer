@@ -12,5 +12,6 @@ dependencies {
 
 
 # Using Library
-- glide:4.9.0 (https://github.com/bumptech/glide)
+- <del>glide:4.9.0 (https://github.com/bumptech/glide)
+- glide:4.8.0 (https://github.com/bumptech/glide)
 - PageIndicatorView:1.0.2 (https://github.com/romandanylyk/PageIndicatorView)
