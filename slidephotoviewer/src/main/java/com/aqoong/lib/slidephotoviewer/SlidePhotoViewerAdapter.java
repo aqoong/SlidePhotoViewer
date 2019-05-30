@@ -76,15 +76,15 @@ public class SlidePhotoViewerAdapter extends PagerAdapter
         //Glide 4.9.0 method
         catch (NoSuchMethodError e){
             e.printStackTrace();
-
-            requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
-            requestOptions.placeholder(mPlaceHolderResource);
-
-            imageRequestManager.load(imageResourceList.get(position).resource)
-                    .fitCenter()
-                    .apply(requestOptions)
-                    .into(imageView);
-            imageView.setOnClickListener(imageResourceList.get(position).listener);
+//
+//            requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
+//            requestOptions.placeholder(mPlaceHolderResource);
+//
+//            imageRequestManager.load(imageResourceList.get(position).resource)
+//                    .fitCenter()
+//                    .apply(requestOptions)
+//                    .into(imageView);
+//            imageView.setOnClickListener(imageResourceList.get(position).listener);
 
         }
 
