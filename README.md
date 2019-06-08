@@ -37,6 +37,8 @@ dependencies {
 [TAG list]
 - AndroidX support<br>
   0.2.4 <br>
+- If you don't use androidx<br>
+  0.1.13 <br>
 
 # Using Library
 - glide:4.9.0 (https://github.com/bumptech/glide)
