@@ -1,6 +1,8 @@
 # SlidePhotoViewer
 [Android CustomView] SlidePhotoViewer
 
+![Alt Text](https://github.com/aqoong/SlidePhotoViewer/raw/master/sample.gif)
+
 # How to Using
  [![](https://jitpack.io/v/aqoong/SlidePhotoViewer.svg)](https://jitpack.io/#aqoong/SlidePhotoViewer)<br>
 `
