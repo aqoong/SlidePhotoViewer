@@ -3,11 +3,13 @@ package com.aqoong.lib.slidephotoviewer;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
-import android.support.v4.view.ViewPager;
+
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.rd.PageIndicatorView;
 
@@ -25,7 +27,7 @@ public class SlidePhotoViewer extends RelativeLayout {
     private long    autoSlideRepeatTime;
 
     private SlidePhotoViewerAdapter vAdapter;
-    private ViewPager               vPager;
+    private ViewPager vPager;
     private PageIndicatorView       itemIndicator;
 
 

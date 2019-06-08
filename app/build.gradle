@@ -26,5 +26,5 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     implementation project(path: ':slidephotoviewer')
-//    implementation 'com.github.aqoong:SlidePhotoViewer:0.1.0'
+//    implementation 'com.github.aqoong:SlidePhotoViewer:0.2.3'
 }

@@ -13,6 +13,9 @@
         android:layout_height="100dp"
         app:useIndicator="true"
         app:autoSlide="true"
+        app:maxSize="10"
+        app:autoSlide_repeat_time="1000"
+        app:placeholder="@drawable/ic_placeholder"
         />
 
 

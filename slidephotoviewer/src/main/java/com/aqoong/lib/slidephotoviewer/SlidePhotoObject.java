@@ -1,5 +1,6 @@
 package com.aqoong.lib.slidephotoviewer;
 
+
 import android.view.View;
 
 public class SlidePhotoObject {
