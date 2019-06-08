@@ -113,7 +113,7 @@ public class SlidePhotoViewerAdapter extends PagerAdapter
         pager.setAdapter(this);
     }
 
-    public Object getResource(int position){
+    public SlidePhotoObject getResource(int position){
         return imageResourceList.get(position);
     }
     public ArrayList<SlidePhotoObject> getResourceList(){return imageResourceList;}

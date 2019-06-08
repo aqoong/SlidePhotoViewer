@@ -138,6 +138,11 @@ public class SlidePhotoViewer extends RelativeLayout {
         vAdapter.setPlaceHolderResource(res);
     }
 
-
+    public int getResSize(){
+        return vAdapter.getCount();
+    }
+    public SlidePhotoObject getResource(int index){
+        return vAdapter.getResource(index);
+    }
 
 }
