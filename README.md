@@ -20,7 +20,15 @@
 ```
 
 
- [![](https://jitpack.io/v/aqoong/SlidePhotoViewer.svg)](https://jitpack.io/#aqoong/SlidePhotoViewer)<br>
+[![](https://jitpack.io/v/aqoong/SlidePhotoViewer.svg)](https://jitpack.io/#aqoong/SlidePhotoViewer)<br>
+```
+ 	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
 `
 dependencies {
         implementation 'com.github.aqoong:SlidePhotoViewer:TAG'
@@ -28,7 +36,7 @@ dependencies {
 `
 [TAG list]
 - AndroidX support<br>
-  0.2.3 <br>
+  0.2.4 <br>
 
 # Using Library
 - glide:4.9.0 (https://github.com/bumptech/glide)
