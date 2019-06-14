@@ -1,9 +1,10 @@
 package com.aqoong.lib.slidephotoviewer;
 
 import android.os.Build;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import androidx.viewpager.widget.ViewPager;
+
 
 /**
  * Created by Andy

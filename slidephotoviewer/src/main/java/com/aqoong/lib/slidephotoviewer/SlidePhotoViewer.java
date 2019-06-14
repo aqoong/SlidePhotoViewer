@@ -3,21 +3,14 @@ package com.aqoong.lib.slidephotoviewer;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Point;
-import android.graphics.Rect;
-import android.os.Build;
 import android.os.Handler;
-
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.ViewPager;
 
 import com.rd.PageIndicatorView;
 
