@@ -1,7 +1,9 @@
 # SlidePhotoViewer
 [Android CustomView] SlidePhotoViewer
-
+- Normal Mode<br>
 ![Alt Text](https://github.com/aqoong/SlidePhotoViewer/raw/master/sample.gif)
+- Preview Mode<br>
+![Alt Text](https://github.com/aqoong/SlidePhotoViewer/raw/master/sample2.gif)
 
 # How to Using
 - .xml
