@@ -11,6 +11,8 @@
         android:background="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+	app:itemBackground="@drawable/slidephotoviewer_default_item_background"
+	app:sidePreview="true"				//side preview function
         app:useIndicator="true"
         app:autoSlide="true"
         app:maxSize="10"                                //image list max size 
@@ -36,10 +38,13 @@ dependencies {
 `
 [TAG list]
 - AndroidX support<br>
-  0.2.4 <br>
+  1.2.0 <br>
 - If you don't use androidx<br>
-  0.1.13 <br>
+  1.1.0 <br>
 
 # Using Library
 - glide:4.9.0 (https://github.com/bumptech/glide)
 - PageIndicatorView:1.0.3 (https://github.com/romandanylyk/PageIndicatorView)
+
+# another
+- preview logic (https://jayrambhia.com/blog/android-viewpager-cards-1)
