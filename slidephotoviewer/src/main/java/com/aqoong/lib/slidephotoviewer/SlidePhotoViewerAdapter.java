@@ -1,17 +1,11 @@
 package com.aqoong.lib.slidephotoviewer;
 
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
@@ -19,6 +13,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 public class SlidePhotoViewerAdapter extends PagerAdapter
 {
@@ -30,13 +29,15 @@ public class SlidePhotoViewerAdapter extends PagerAdapter
 
     private ArrayList<SlidePhotoObject>   imageResourceList;
     private int                 mPlaceHolderResource;
+    private int                 mItemBackgroundRescource;
 
-    public SlidePhotoViewerAdapter(Context context){
-        this(context, null);
+    public SlidePhotoViewerAdapter(Context context, int itemBackground){
+        this(context, itemBackground, null);
     }
 
-    public SlidePhotoViewerAdapter(Context context, ArrayList<SlidePhotoObject> resources){
+    public SlidePhotoViewerAdapter(Context context, int itemBackground, ArrayList<SlidePhotoObject> resources){
         mContext = context;
+        this.mItemBackgroundRescource = itemBackground;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         imageRequestManager = Glide.with(mContext);
 
@@ -62,6 +63,7 @@ public class SlidePhotoViewerAdapter extends PagerAdapter
         View itemView = mLayoutInflater.inflate(R.layout.slidephotoviewer_pager_item, container, false);
 
         AppCompatImageView imageView = itemView.findViewById(R.id.slidephotoviewer_image);
+        imageView.setBackgroundResource(mItemBackgroundRescource);
 
         RequestOptions requestOptions = new RequestOptions();
         try
@@ -113,6 +115,10 @@ public class SlidePhotoViewerAdapter extends PagerAdapter
         pager.setAdapter(null);
         imageResourceList.clear();
         pager.setAdapter(this);
+    }
+    public void setItemBackground(int backgroundImage){
+        this.mItemBackgroundRescource = backgroundImage;
+        this.notifyDataSetChanged();
     }
 
     public SlidePhotoObject getResource(int position){

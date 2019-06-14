@@ -2,13 +2,21 @@ package com.aqoong.lib.slidephotoviewer;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Handler;
 
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 
 import com.rd.PageIndicatorView;
@@ -25,10 +33,14 @@ public class SlidePhotoViewer extends RelativeLayout {
     private boolean autoSlide;
     private boolean useIndicator;
     private long    autoSlideRepeatTime;
+    private boolean useSidePreview;
+    private int     resItemBackground;
 
     private SlidePhotoViewerAdapter vAdapter;
     private ViewPager vPager;
     private PageIndicatorView       itemIndicator;
+
+    private final int defPadding = 30;
 
 
     public SlidePhotoViewer(Context context) {
@@ -44,6 +56,8 @@ public class SlidePhotoViewer extends RelativeLayout {
             autoSlide       = typedArray.getBoolean(R.styleable.SlidePhotoViewer_autoSlide, true);
             useIndicator    = typedArray.getBoolean(R.styleable.SlidePhotoViewer_useIndicator, true);
             autoSlideRepeatTime = typedArray.getInteger(R.styleable.SlidePhotoViewer_autoSlide_repeat_time, 3000);
+            useSidePreview  = typedArray.getBoolean(R.styleable.SlidePhotoViewer_sidePreview, false);
+            resItemBackground = typedArray.getResourceId(R.styleable.SlidePhotoViewer_itemBackground, R.drawable.slidephotoviewer_default_item_background);
         }finally {
             typedArray.recycle();
         }
@@ -52,7 +66,7 @@ public class SlidePhotoViewer extends RelativeLayout {
     }
 
     private void initView(){
-        vAdapter = new SlidePhotoViewerAdapter(getContext());
+        vAdapter = new SlidePhotoViewerAdapter(getContext(), resItemBackground);
         vAdapter.setPlaceHolderResource(resPlaceholder);
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -62,10 +76,34 @@ public class SlidePhotoViewer extends RelativeLayout {
         vPager          = parentView.findViewById(R.id.slidephotoviewer_viewpager);
 
         vPager.setAdapter(vAdapter);
-
+        setSidePreview(useSidePreview);
         itemIndicator.setVisibility(useIndicator?VISIBLE:GONE);
 
         autoSlide(autoSlide);
+    }
+    public void setSidePreview(boolean use){
+        setSidePreview(use, use==false?0:defPadding);
+    }
+    public void setSidePreview(boolean use, int padding){
+        vPager.setClipToPadding(!use);
+        if(use)
+        {
+            int convertedPadding = convertPixelsToDp(padding, getContext());
+            Point screen = new Point();
+            WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+            wm.getDefaultDisplay().getSize(screen);
+            float startOffset = (float) convertedPadding / (float) (screen.x - 2 * convertedPadding);
+            itemIndicator.setTranslationY(itemIndicator.getTranslationY() - convertedPadding);
+            vPager.setPadding(convertedPadding, convertedPadding, convertedPadding, convertedPadding);
+            vPager.setOffscreenPageLimit(3);
+            vPager.setPageMargin(50);
+            vPager.setPageTransformer(false, new TransFromViewPager(0, 0, 0.7f, startOffset));
+        }else{
+            vPager.setOffscreenPageLimit(1);
+            vPager.setPageMargin(0);
+            vPager.setPadding(0, 0, 0, 0);
+            vPager.setPageTransformer(true, null);
+        }
     }
 
     private void nextSlide(){
@@ -78,6 +116,12 @@ public class SlidePhotoViewer extends RelativeLayout {
     }
 
     public void autoSlide(boolean start){
+        autoSlide(start, this.autoSlideRepeatTime);
+    }
+
+    public void autoSlide(boolean start, long reapeatTime){
+        this.autoSlideRepeatTime = reapeatTime;
+
         final Handler handler = new Handler();
         final Runnable runnable = new Runnable() {
             @Override
@@ -97,7 +141,6 @@ public class SlidePhotoViewer extends RelativeLayout {
         }else{
             timer.cancel();
         }
-
     }
 
     public void setReasourceList(ArrayList<Object> resList) throws MaxSizeException{
@@ -145,6 +188,16 @@ public class SlidePhotoViewer extends RelativeLayout {
     }
     public SlidePhotoObject getResource(int index){
         return vAdapter.getResource(index);
+    }
+
+    public void setItemBackground(int backgroundImage){
+        vAdapter.setItemBackground(backgroundImage);
+    }
+
+
+    private int convertPixelsToDp(float px, Context context) {
+        int value = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, context.getResources().getDisplayMetrics());
+        return value;
     }
 
 }

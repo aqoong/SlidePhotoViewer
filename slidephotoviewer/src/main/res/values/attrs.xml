@@ -6,5 +6,7 @@
         <attr name="autoSlide" format="boolean"/>
         <attr name="useIndicator" format="boolean"/>
         <attr name="autoSlide_repeat_time" format="integer"/>
+        <attr name="sidePreview" format="boolean"/>
+        <attr name="itemBackground" format="reference"/>
     </declare-styleable>
 </resources>
