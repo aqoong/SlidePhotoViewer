@@ -1,12 +1,17 @@
 package com.aqoong.lib.slidephotoviewer;
 
-
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.Log;
+import android.view.DragEvent;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -15,9 +20,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.ortiz.touchview.TouchImageView;
 
 import java.util.ArrayList;
-
 
 public class SlidePhotoViewerAdapter extends PagerAdapter
 {
@@ -30,6 +35,7 @@ public class SlidePhotoViewerAdapter extends PagerAdapter
     private ArrayList<SlidePhotoObject>   imageResourceList;
     private int                 mPlaceHolderResource;
     private int                 mItemBackgroundRescource;
+    private boolean             useZoom;
 
     public SlidePhotoViewerAdapter(Context context, int itemBackground){
         this(context, itemBackground, null);
@@ -60,9 +66,17 @@ public class SlidePhotoViewerAdapter extends PagerAdapter
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
-        View itemView = mLayoutInflater.inflate(R.layout.slidephotoviewer_pager_item, container, false);
+        final View itemView = mLayoutInflater.inflate(R.layout.slidephotoviewer_pager_item, container, false);
+        View imageView = null;
+        if(useZoom) {
+            imageView = (TouchImageView)itemView.findViewById(R.id.slidephotoviewer_image_zoom);
+//            setPhotoZoom((TouchImageView) imageView);
+            imageView.setVisibility(View.VISIBLE);
+        }else{
+            imageView = (AppCompatImageView)itemView.findViewById(R.id.slidephotoviewer_image);
+            imageView.setVisibility(View.VISIBLE);
+        }
 
-        AppCompatImageView imageView = itemView.findViewById(R.id.slidephotoviewer_image);
         imageView.setBackgroundResource(mItemBackgroundRescource);
 
         RequestOptions requestOptions = new RequestOptions();
@@ -74,7 +88,7 @@ public class SlidePhotoViewerAdapter extends PagerAdapter
 
             imageRequestManager.load(imageResourceList.get(position).resource)
                     .apply(requestOptions)
-                    .into(imageView);
+                    .into(useZoom?(TouchImageView)imageView:(AppCompatImageView)imageView);
             imageView.setOnClickListener(imageResourceList.get(position).listener);
         }
         catch (NoSuchMethodError e){
@@ -84,6 +98,37 @@ public class SlidePhotoViewerAdapter extends PagerAdapter
         container.addView(itemView);
 
         return itemView;
+    }
+
+    private void setPhotoZoom(final TouchImageView imageView){
+        imageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    imageView.resetZoom();
+                } else {
+                    if (imageView.getCurrentZoom() > 1.8f) {
+                        final Dialog dialog = new Dialog(mContext, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+                        dialog.setContentView(R.layout.slidephotoviewer_pager_item);
+                        TouchImageView image = dialog.findViewById(R.id.slidephotoviewer_image_zoom);
+                        image.setVisibility(View.VISIBLE);
+                        image.setImageDrawable(imageView.getDrawable());
+                        image.setMaxZoom(1.8f);
+
+                        image.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View view, MotionEvent motionEvent) {
+                                imageView.resetZoom();
+                                dialog.dismiss();
+                                return true;
+                            }
+                        });
+                        dialog.show();
+                    }
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -125,4 +170,9 @@ public class SlidePhotoViewerAdapter extends PagerAdapter
         return imageResourceList.get(position);
     }
     public ArrayList<SlidePhotoObject> getResourceList(){return imageResourceList;}
+    public void usePhotoZoom(boolean use){
+        this.useZoom = use;
+        this.notifyDataSetChanged();
+    }
+    public boolean useZoom(){return this.useZoom;}
 }

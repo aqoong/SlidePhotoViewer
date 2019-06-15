@@ -28,6 +28,7 @@ public class SlidePhotoViewer extends RelativeLayout {
     private long    autoSlideRepeatTime;
     private boolean useSidePreview;
     private int     resItemBackground;
+    private boolean useZoom;
 
     private SlidePhotoViewerAdapter vAdapter;
     private ViewPager vPager;
@@ -51,6 +52,7 @@ public class SlidePhotoViewer extends RelativeLayout {
             autoSlideRepeatTime = typedArray.getInteger(R.styleable.SlidePhotoViewer_autoSlide_repeat_time, 3000);
             useSidePreview  = typedArray.getBoolean(R.styleable.SlidePhotoViewer_sidePreview, false);
             resItemBackground = typedArray.getResourceId(R.styleable.SlidePhotoViewer_itemBackground, R.drawable.slidephotoviewer_default_item_background);
+            useZoom         = typedArray.getBoolean(R.styleable.SlidePhotoViewer_useZoom, false);
         }finally {
             typedArray.recycle();
         }
@@ -73,6 +75,7 @@ public class SlidePhotoViewer extends RelativeLayout {
         itemIndicator.setVisibility(useIndicator?VISIBLE:GONE);
 
         autoSlide(autoSlide);
+        usePhotoZoom(useZoom);
     }
     public void setSidePreview(boolean use){
         setSidePreview(use, use==false?0:defPadding);
@@ -107,7 +110,10 @@ public class SlidePhotoViewer extends RelativeLayout {
 
         return nextId == vAdapter.getCount() ? 0 : nextId;
     }
-
+    public void usePhotoZoom(boolean use){
+        this.useZoom = use;
+        vAdapter.usePhotoZoom(useZoom);
+    }
     public void autoSlide(boolean start){
         autoSlide(start, this.autoSlideRepeatTime);
     }

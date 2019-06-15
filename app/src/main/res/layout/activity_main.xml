@@ -12,10 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorAccent"
-        app:sidePreview="true"
+        app:sidePreview="false"
         app:useIndicator="true"
         app:autoSlide="false"
         app:maxSize="10"
+        app:useZoom="true"
         app:autoSlide_repeat_time="1000"
         app:placeholder="@drawable/ic_placeholder"
         />

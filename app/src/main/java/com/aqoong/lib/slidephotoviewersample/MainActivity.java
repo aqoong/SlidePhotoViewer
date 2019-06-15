@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         mSlideViewr = findViewById(R.id.slideViewer);
-        mSlideViewr.setSidePreview(true);
+
         try {
             mSlideViewr.addResource(R.drawable.ic_test, new View.OnClickListener() {
                 @Override

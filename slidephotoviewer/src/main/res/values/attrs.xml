@@ -8,5 +8,6 @@
         <attr name="autoSlide_repeat_time" format="integer"/>
         <attr name="sidePreview" format="boolean"/>
         <attr name="itemBackground" format="reference"/>
+        <attr name="useZoom" format="boolean"/>
     </declare-styleable>
 </resources>
