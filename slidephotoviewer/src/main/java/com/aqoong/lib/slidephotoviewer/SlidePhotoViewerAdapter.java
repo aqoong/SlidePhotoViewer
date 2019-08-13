@@ -25,7 +25,6 @@ public class SlidePhotoViewerAdapter extends PagerAdapter
 
     private Context             mContext;
     private LayoutInflater      mLayoutInflater;
-    private RequestManager      imageRequestManager;
 
     private ArrayList<SlidePhotoObject>   imageResourceList;
     private int                 mPlaceHolderResource;
@@ -39,7 +38,6 @@ public class SlidePhotoViewerAdapter extends PagerAdapter
         mContext = context;
         this.mItemBackgroundRescource = itemBackground;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        imageRequestManager = Glide.with(mContext);
 
         imageResourceList = resources;
         if(imageResourceList == null){
@@ -72,7 +70,8 @@ public class SlidePhotoViewerAdapter extends PagerAdapter
             requestOptions.placeholder(mPlaceHolderResource);
             requestOptions.fitCenter();
 
-            imageRequestManager.load(imageResourceList.get(position).resource)
+            Glide.with(mContext)
+                    .load(imageResourceList.get(position).resource)
                     .apply(requestOptions)
                     .into(imageView);
             imageView.setOnClickListener(imageResourceList.get(position).listener);
