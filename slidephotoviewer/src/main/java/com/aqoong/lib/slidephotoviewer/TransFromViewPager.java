@@ -9,7 +9,7 @@ import android.view.View;
 /**
  * Created by Andy
  * <p>
- * email : han.andy@cherrypica.com
+ * email : cooldnjsdn@gmail.com
  * date  : 2019-06-14
  **/
 public class TransFromViewPager implements ViewPager.PageTransformer
